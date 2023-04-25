@@ -73,12 +73,7 @@ function Cartpage() {
   };
 
   const handleCheckoutClick = () => {
-    if (util.isLoggedIn) {
-      util.setCheckoutFrom("cart");
       navTo("/checkout");
-    } else {
-      navTo("/login");
-    }
   };
 
   const handleViewProduct = (id) => {
@@ -211,9 +206,7 @@ function Cartpage() {
             </CardContent>
             <CardActions>
               <Button onClick={handleCheckoutClick} size="small">
-                {localStorage.getItem("flipkartToken")
-                  ? "Checkout"
-                  : "Login to checkout"}
+                "Checkout"
               </Button>
             </CardActions>
           </Card>

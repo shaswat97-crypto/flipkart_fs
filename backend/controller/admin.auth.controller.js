@@ -47,3 +47,12 @@ export const adminLogin = async (req, res) => {
 
   res.json({ accessToken });
 };
+
+export const getUsers = async(req, res) =>{
+  const users = await User.find()
+  console.log(users);
+
+  if (!users) return res.status(400).send("Users not found");
+
+  res.status(200).send(users);
+}

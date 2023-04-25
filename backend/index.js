@@ -31,7 +31,6 @@ app
   .use("/api/user", userAuthRouter)
   .use("/api/products", productRouter)
   .use("/api/cart", cartRouter)
-  .use("/api/admin", adminAuthRouter)
   .use("*", (req, res) => {
     res.sendFile(path.resolve(__dirname, "build", "index.html"));
   });

@@ -12,6 +12,7 @@ import Men from "./Men";
 import Jewelery from "./Jewelery";
 import Electronics from "./Electronics";
 import axios from "axios";
+import Admin from './Admin/Admin'
 
 function CartProvider() {
   let loadCircle = (
@@ -79,6 +80,7 @@ function CartProvider() {
           <Route path="/men" element={<Men />} />
           <Route path="/electronics" element={<Electronics />} />
           <Route path="/jewelery" element={<Jewelery />} />
+          <Route path="/admin" element={<Admin />} />
         </Routes>
         <a style={{ textDecoration: "none" }} href="#">
           <Footer />

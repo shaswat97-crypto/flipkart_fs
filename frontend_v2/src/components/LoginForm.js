@@ -29,8 +29,15 @@ function LoginForm() {
       const data = new FormData(event.currentTarget);
       util.setClick(true);
       if (event.target.getAttribute("use") == "guest") {
-        console.log("guest");
-        navTo("/");
+        console.log("Admin");
+        const signupObj = {
+          email:data.get("email"),
+          password:data.get("password"),
+        }
+        const token = await axios.post('/api/admin/login', signupObj);
+        // console.log(token.data);
+        localStorage.setItem("flipkartAdminToken",token.data.accessToken)
+        navTo("/admin");
       } else if (event.target.getAttribute("use") == "signup") {
 
         console.log("signup");
@@ -123,16 +130,6 @@ function LoginForm() {
               label="Remember me"
             />
             <Button
-              type="submit"
-              fullWidth
-              variant="contained"
-              sx={{ mt: 3 }}
-              disabled={util.clicked}
-              use="guest"
-            >
-                Login In As Guest
-            </Button>
-            <Button
               fullWidth
               variant="contained"
               sx={{ mt: 3 }}
@@ -152,7 +149,23 @@ function LoginForm() {
             >
                 Sign Up
             </Button>
+            <Button
+              type="submit"
+              fullWidth
+              variant="contained"
+              sx={{ mt: 3 }}
+              disabled={util.clicked}
+              use="guest"
+            >
+                Admin Login
+            </Button>
           </Box>
+        </Box>
+        <Box sx={{display:'flex', flexDirection:'column', border:'solid gray 1px', justifyContent:'center', alignItems:'center', mt:2, borderRadius:'4px'}}>
+          <Typography>Admin Login: a@a.com</Typography>
+          <Typography>Admin Password: 123456</Typography>
+          <Typography>User Login: a@b.com</Typography>
+          <Typography>User Password: 123456</Typography>
         </Box>
       </Container>
     </ThemeProvider>
