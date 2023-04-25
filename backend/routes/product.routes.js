@@ -7,7 +7,8 @@ import {
   getProducts,
   addNewPorduct,
   getProductsAdmin,
-  getProductById
+  getProductById,
+  deleteProduct
 } from "../controller/products.controller.js";
 
 const router = express.Router();
@@ -16,4 +17,5 @@ export default router
   .get("/", authenticateToken, getProducts)
   .post("/", authenticateAdminToken, addNewPorduct)
   .get("/", authenticateAdminToken, getProductsAdmin)
-  .get("/:id", authenticateToken, getProductById);
+  .get("/:id", authenticateToken, getProductById)
+  .delete('/:id', authenticateAdminToken, deleteProduct);

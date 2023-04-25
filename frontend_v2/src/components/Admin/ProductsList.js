@@ -8,7 +8,7 @@ const ProductsList = () => {
     // Fetch products data from server
     // Set products state
     const fetchData = async () => {
-      const res = axios.get("/api/products", {
+      const res = await axios.get("/api/products", {
         headers: {
           Authorization: `Bearer ${localStorage.getItem("flipkartAdminToken")}`,
         },

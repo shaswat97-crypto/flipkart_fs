@@ -7,11 +7,15 @@ const UsersList = () => {
   useEffect(() => {
     // Fetch users data from server
     // Set users state
-    axios.get("/api/admin/users", {
-      headers: {
-        Authorization: `Bearer ${localStorage.getItem("flipkartAdminToken")}`,
-      },
-    });
+    const fetchUsers = async () => {
+      const res = await axios.get("/api/admin/users", {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("flipkartAdminToken")}`,
+        },
+      });
+      setUsers(res.data);
+    };
+    fetchUsers()
   }, []);
 
   let loadCircle = (
