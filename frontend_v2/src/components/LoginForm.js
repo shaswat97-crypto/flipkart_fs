@@ -39,7 +39,7 @@ function LoginForm() {
             email:data.get("email"),
             password:data.get("password"),
           }
-          const token = await axios.post('/user/signup', signupObj);
+          const token = await axios.post('/api/user/signup', signupObj);
           // console.log(token.data);
           localStorage.setItem("flipkartToken",token.data.accessToken)
   
@@ -54,7 +54,7 @@ function LoginForm() {
           email:data.get("email"),
           password:data.get("password"),
         }
-        const token = await axios.post('/user/login', signupObj);
+        const token = await axios.post('/api/user/login', signupObj);
         // console.log(token.data);
         localStorage.setItem("flipkartToken",token.data.accessToken)
         navTo("/");

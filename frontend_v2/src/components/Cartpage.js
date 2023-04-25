@@ -31,7 +31,7 @@ function Cartpage() {
     const id = e.target.getAttribute("val");
     try {
       let cart = await axios.post(
-        "/cart/incQty",
+        "/api/cart/incQty",
         {
           productId: id,
         },
@@ -55,7 +55,7 @@ function Cartpage() {
     const id = e.target.getAttribute("val");
     try {
       let cart = await axios.post(
-        "/cart/decQty",
+        "/api/cart/decQty",
         {
           productId: id,
         },
@@ -99,7 +99,7 @@ function Cartpage() {
     const id = e.currentTarget.getAttribute("val");
     try {
       let cart = await axios.post(
-        "/cart/delete",
+        "/api/cart/delete",
         {
           productId: id,
         },
