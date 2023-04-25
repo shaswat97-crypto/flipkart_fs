@@ -14,7 +14,8 @@ code {
 
 .banner{
   margin-top: 64px;
-  height: 40vh;
+  height: auto;
+  /* max-height: 300px; */
 }
 .banner img{
   width: 100%;
@@ -23,9 +24,52 @@ code {
   object-position: top;
 }
 
+.heading{
+  text-align: center;
+  background-color: #f2f2f2;
+  padding: 20px 0;
+  border-bottom: 2px solid #333;
+  color: #333;
+  font-size: 40px;
+}
+
+.category-selector {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+}
+
+.category-image {
+  width: 50%;
+  padding: 10px;
+  box-sizing: border-box;
+  /* display: inline-block; */
+  transition: transform 0.2s ease-out;
+}
+
+.category-image:hover img {
+  transform: scale(0.95);
+}
+
+
+.category-image img {
+  display: block;
+  width: 100%;
+  height: auto;
+  max-width: 100%;
+}
+
+@media (max-width: 768px) {
+  .category-image {
+    width: 100%;
+  }
+}
+
 .bannerProd{
   margin-top:-15px;
   height: 70px;
+  margin-bottom: 4%;
 }
 
 .bannerProd img{
@@ -34,6 +78,7 @@ code {
   object-fit: cover;
   /* object-position: top; */
 }
+
 
 .product img, .cartImg img{
   height: 100%;
@@ -91,6 +136,7 @@ code {
   padding: 3rem;
   max-width: 600px;
   margin-left: 15%;
+  padding-top: 0;
 }
 .chipCont{
   display: flex;

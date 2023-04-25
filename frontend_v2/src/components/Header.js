@@ -12,7 +12,6 @@ import Badge from "@mui/material/Badge";
 import MenuItem from "@mui/material/MenuItem";
 import Menu from "@mui/material/Menu";
 import MenuIcon from "@mui/icons-material/Menu";
-import SearchIcon from "@mui/icons-material/Search";
 import AccountCircle from "@mui/icons-material/AccountCircle";
 import MailIcon from "@mui/icons-material/Mail";
 import NotificationsIcon from "@mui/icons-material/Notifications";
@@ -22,32 +21,12 @@ import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import ProductCard from "./Card";
 import { useNavigate } from "react-router-dom";
 import { auth } from "../auth/firebase";
-
-const Search = styled("div")(({ theme }) => ({
-  position: "relative",
-  borderRadius: theme.shape.borderRadius,
-  backgroundColor: alpha(theme.palette.common.white, 0.15),
-  "&:hover": {
-    backgroundColor: alpha(theme.palette.common.white, 0.25),
-  },
-  marginRight: theme.spacing(2),
-  marginLeft: 0,
-  width: "100%",
-  [theme.breakpoints.up("sm")]: {
-    marginLeft: theme.spacing(3),
-    width: "auto",
-  },
-}));
-
-const SearchIconWrapper = styled("div")(({ theme }) => ({
-  padding: theme.spacing(0, 2),
-  height: "100%",
-  position: "absolute",
-  pointerEvents: "none",
-  display: "flex",
-  alignItems: "center",
-  justifyContent: "center",
-}));
+import { Button } from "@mui/material";
+import { Link } from "react-router-dom";
+import DiamondIcon from "@mui/icons-material/Diamond";
+import SpeakerIcon from "@mui/icons-material/Speaker";
+import ManIcon from "@mui/icons-material/Man";
+import WomanIcon from "@mui/icons-material/Woman";
 
 const StyledInputBase = styled(InputBase)(({ theme }) => ({
   color: "inherit",
@@ -66,31 +45,14 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 export default function Header({ data, homeFunc }) {
   const util = useContext(CartStore);
   const navTo = useNavigate();
-  const cartKeys = util.inCartState ? Object.keys(util.inCartState) : [];
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
   // const [text, setText] = React.useState('');
-  const handleSearch = (e) => {
-    const inp = e.target.value;
-    let obj = data.filter((d) => {
-      return d.title.toLowerCase().includes(inp.toLowerCase());
-    });
-    // console.log(obj);
-    let home = (
-      <div className="productCont">
-        {obj.map((d) => (
-          <ProductCard key={d.id} d={d} data={data} homeFunc={homeFunc} />
-        ))}
-      </div>
-    );
-    util.setHomeCont(home);
-  };
+
   const isMenuOpen = Boolean(anchorEl);
   const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
-  const handleLogout = async () => {
-    if (util.isLoggedIn) {
-      await auth.signOut();
-    }
+  const handleLogout = () => {
+    localStorage.removeItem("flipkartToken");
     navTo("/login");
   };
   const handleProfileMenuOpen = (event) => {
@@ -125,7 +87,7 @@ export default function Header({ data, homeFunc }) {
       onClose={handleMenuClose}
     >
       <MenuItem onClick={handleLogout}>
-        {util.isLoggedIn ? "Logout" : "Login/SignUp"}
+        {localStorage.getItem("flipkartToken") ? "Logout" : "Login/SignUp"}
       </MenuItem>
     </Menu>
   );
@@ -176,26 +138,111 @@ export default function Header({ data, homeFunc }) {
         </IconButton>
         <p>Cart</p>
       </MenuItem>
+
+      <MenuItem
+        onClick={() => {
+          navTo("/men");
+        }}
+      >
+        <IconButton
+          size="large"
+          aria-label="account of current user"
+          aria-controls="primary-search-account-menu"
+          aria-haspopup="true"
+          color="inherit"
+        >
+          <ManIcon />
+        </IconButton>
+        <p>Men</p>
+      </MenuItem>
+
+      <MenuItem
+        onClick={() => {
+          navTo("/women");
+        }}
+      >
+        <IconButton
+          size="large"
+          aria-label="account of current user"
+          aria-controls="primary-search-account-menu"
+          aria-haspopup="true"
+          color="inherit"
+        >
+          <WomanIcon />
+        </IconButton>
+        <p>Women</p>
+      </MenuItem>
+
+      <MenuItem
+        onClick={() => {
+          navTo("/electronics");
+        }}
+      >
+        <IconButton
+          size="large"
+          aria-label="account of current user"
+          aria-controls="primary-search-account-menu"
+          aria-haspopup="true"
+          color="inherit"
+        >
+          <SpeakerIcon />
+        </IconButton>
+        <p>Electronics</p>
+      </MenuItem>
+
+      <MenuItem
+        onClick={() => {
+          navTo("/jewelery");
+        }}
+      >
+        <IconButton
+          size="large"
+          aria-label="account of current user"
+          aria-controls="primary-search-account-menu"
+          aria-haspopup="true"
+          color="inherit"
+        >
+          <DiamondIcon />
+        </IconButton>
+        <p>jewelery</p>
+      </MenuItem>
     </Menu>
   );
 
   return (
-    <Box sx={{ flexGrow: 1, mb: 4 }}>
+    <Box sx={{ flexGrow: 1, mb: 8 }}>
       <AppBar position="fixed" sx={{ pl: 2, pr: 2 }}>
         <Toolbar>
-          <img src={logo} alt="logo" />
-          <Search>
-            <SearchIconWrapper>
-              <SearchIcon />
-            </SearchIconWrapper>
-            <StyledInputBase
-              placeholder="Search…"
-              inputProps={{ "aria-label": "search" }}
-              onChange={handleSearch}
-            />
-          </Search>
+          <img
+            style={{ width: "100px", cursor: "pointer" }}
+            src={logo}
+            alt="logo"
+            onClick={() => {
+              navTo("/");
+            }}
+          />
           <Box sx={{ flexGrow: 1 }} />
-          <Box sx={{ display: { xs: "none", md: "flex" } }}>
+          <Box sx={{ display: { xs: "none", md: "flex" }, gap: "30px" }}>
+            <Link to="/men">
+              <Button color="inherit" sx={{ color: "white" }}>
+                Men
+              </Button>
+            </Link>
+            <Link to="/women">
+              <Button sx={{ color: "white" }} color="inherit">
+                Women
+              </Button>
+            </Link>
+            <Link to="/electronics">
+              <Button sx={{ color: "white" }} color="inherit">
+                Electronics
+              </Button>
+            </Link>
+            <Link to="/jewelery">
+              <Button sx={{ color: "white" }} color="inherit">
+                Jewelery
+              </Button>
+            </Link>
             <IconButton
               size="large"
               aria-label="show 17 new notifications"
@@ -204,7 +251,7 @@ export default function Header({ data, homeFunc }) {
                 navTo("/cart");
               }}
             >
-              <Badge badgeContent={cartKeys.length} color="error">
+              <Badge badgeContent={util.rows.length} color="error">
                 <ShoppingCartIcon />
               </Badge>
             </IconButton>

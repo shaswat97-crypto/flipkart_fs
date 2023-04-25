@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useState, useEffect } from "react";
 import banner from "../media/flipkart-big-billion-day-bank &-wallet-offers.jpg";
 import { CartStore } from "./CartContext";
 import Header from "./Header";
@@ -10,11 +10,12 @@ import Button from "@mui/material/Button";
 import Stack from "@mui/material/Stack";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import ElectricBoltIcon from "@mui/icons-material/ElectricBolt";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import Checkout from "./product/Checkout";
 import Alert from "@mui/material/Alert";
 import Chip from "@mui/material/Chip";
 import StarIcon from "@mui/icons-material/Star";
+import axios from "axios";
 
 const Item = styled(Paper)(({ theme }) => ({
   backgroundColor: theme.palette.mode === "dark" ? "#1A2027" : "#fff",
@@ -25,16 +26,48 @@ const Item = styled(Paper)(({ theme }) => ({
 }));
 
 function Productpage() {
+  const { id } = useParams();
   const navTo = useNavigate();
   const util = useContext(CartStore);
-  const product = util.currProduct;
-  let incart = false;
-  if (util.inCartState && util.inCartState[util.currProduct.id] != undefined) {
-    incart = true;
-  }
-  // console.log(util.inCartState, util.currProduct.id)
+  const [success, setSuccess] = useState(false);
+  const [product, setProduct] = useState();
+
+  useEffect(() => {
+    async function getProduct() {
+      try {
+        let p = await axios.get(`/products/${id}`, {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("flipkartToken")}`,
+          },
+        });
+        // console.log(p.data);
+        setProduct(p.data);
+
+        let cart = await axios.get("/cart", {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("flipkartToken")}`,
+          },
+        });
+        // console.log(cart.data);
+        cart = cart.data
+        if (cart && cart.length > 0) {
+          for (let i = 0; i < cart.length; i++) {
+            if (cart[i].product._id == id) {
+              // console.log('incart')
+              util.setIncart(true);
+              break;
+            }
+          }
+        }
+      } catch (err) {
+        console.log({ err });
+      }
+    }
+    getProduct();
+  }, []);
+ 
   const handleBuyNow = () => {
-    if (util.isLoggedIn) {
+    if (localStorage.getItem("flipkartToken")) {
       util.setCheckoutFrom("page");
       navTo("/checkout");
     }
@@ -42,33 +75,40 @@ function Productpage() {
       navTo('/login');
     }
   };
-  const [success, setSuccess] = useState(false);
-  const handleAddCartClick = (product) => {
+
+  const handleAddCartClick = async () => {
     setSuccess(true);
     if (!product || product == {}) return;
     console.log("handleAddCartClick");
-    const str = localStorage.getItem("cart");
-    let c = JSON.parse(new String(str));
-    // console.log(c)
-    if (c == undefined) {
-      c = {};
+    util.setFetch(!util.fetch);
+    try{
+      let cart = await axios.post(
+        "/cart",
+        {
+          productId: product._id,
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("flipkartToken")}`,
+          },
+        }
+      );
+      console.log({ cart });
     }
-    product = { ...product, qty: 1 };
-    // console.log(data);
-    c[product.id] = product;
-    localStorage.setItem("cart", JSON.stringify({ ...c }));
-    util.setIncartState({ ...c });
+    catch(err){
+      console.log({err})
+    }
     setTimeout(() => {
       setSuccess(false);
       console.log("setted");
     }, 2000);
+   
   };
 
   const handleViewCartClick = () => {
     navTo("/cart");
   };
-  // console.log(util);
-  // console.log(product)
+
   const cartAlert = (
     <div className="alerted">
       <Alert sx={{ backgroundColor: "white" }} severity="success">
@@ -94,7 +134,8 @@ function Productpage() {
             <Grid container spacing={2}>
               <Grid
                 item
-                xs={4}
+                xs={12}
+                md={6}
                 sx={{
                   display: "flex",
                   flexDirection: "column",
@@ -105,30 +146,27 @@ function Productpage() {
                   <img src={product.image} alt="" />
                 </div>
                 <Stack spacing={2} direction="row" sx={{ pt: 4 }}>
-                  {incart ? (
-                    <Button variant="contained" onClick={handleViewCartClick}>
-                      <ShoppingCartIcon></ShoppingCartIcon> &nbsp; view cart
-                    </Button>
-                  ) : (
+                
                     <Button
                       variant="contained"
                       onClick={() => handleAddCartClick(product)}
                     >
                       <ShoppingCartIcon></ShoppingCartIcon> &nbsp; add to cart
                     </Button>
-                  )}
+            
                   <Button
                     onClick={handleBuyNow}
                     color="success"
                     variant="contained"
                   >
-                    <ElectricBoltIcon /> &nbsp; {util.isLoggedIn?'buy now':'login to buy'}
+                    <ElectricBoltIcon /> &nbsp; {localStorage.getItem("flipkartToken")?'buy now':'login to buy'}
                   </Button>
                 </Stack>
               </Grid>
               <Grid
                 item
-                xs={8}
+                xs={12}
+                md={6}
                 sx={{
                   display: "flex",
                   flexDirection: "column",
@@ -136,7 +174,7 @@ function Productpage() {
                 }}
               >
                 <div className="dataCont">
-                  <h3>{product.title}</h3>
+                  <h3 style={{"marginBottom": "60px"}}>{product.title}</h3>
                   <div className="chipCont">
                     <div className="chip">
                       <div>{product.rating.rate}</div>
@@ -152,7 +190,7 @@ function Productpage() {
                     <h1>
                       {(
                         product.price -
-                        product.price * (Number(product.id) * 0.01)
+                        product.price * (5 * 0.01)
                       ).toFixed(2)}
                     </h1>
                     <h3>

@@ -14,6 +14,7 @@ import Container from "@mui/material/Container";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import Alert from "@mui/material/Alert";
 import { CartStore } from "./CartContext";
+import axios from "axios";
 
 const theme = createTheme();
 
@@ -21,48 +22,57 @@ function LoginForm() {
   const util = useContext(CartStore);
   const [error, setError] = useState("");
   const navTo = useNavigate();
-  // console.log("user", isLoggedIn);
-  function doNothing(){
-    console.log('...');
-  }
+
   const handleSubmit = async (event) => {
     try {
       event.preventDefault();
       const data = new FormData(event.currentTarget);
       util.setClick(true);
-      // console.log(event.target.getAttribute("use"))
       if (event.target.getAttribute("use") == "guest") {
         console.log("guest");
-        // await auth.signInWithEmailAndPassword("a@a.com", "123456");
-        // util.setLoggedIn(true);
-        // console.log(util.IsLoggedIn);
         navTo("/");
       } else if (event.target.getAttribute("use") == "signup") {
+
         console.log("signup");
-        await auth.createUserWithEmailAndPassword(
-          data.get("email"),
-          data.get("password")
-        );
-        util.setLoggedIn(true);
-        navTo("/");
+          //set user in backend
+          const signupObj = {
+            email:data.get("email"),
+            password:data.get("password"),
+          }
+          const token = await axios.post('/user/signup', signupObj);
+          // console.log(token.data);
+          localStorage.setItem("flipkartToken",token.data.accessToken)
+  
+          navTo("/");
+
       } else if (event.target.getAttribute("use") == "login") {
+        
         console.log("login");
-        await auth.signInWithEmailAndPassword(
-          data.get("email"),
-          data.get("password")
-        );
-        util.setLoggedIn(true);
+
+        //set user in backend
+        const signupObj = {
+          email:data.get("email"),
+          password:data.get("password"),
+        }
+        const token = await axios.post('/user/login', signupObj);
+        // console.log(token.data);
+        localStorage.setItem("flipkartToken",token.data.accessToken)
         navTo("/");
+
       }
     } catch (err) {
+
       console.log(err.message);
       setError(err.message);
       setTimeout(() => {
         setError("");
       }, 2000);
+
     }
+
     util.setClick(false);
   };
+
   return (
     <ThemeProvider theme={theme}>
       <Container component="main" maxWidth="xs">

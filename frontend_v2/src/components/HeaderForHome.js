@@ -19,8 +19,15 @@ import NotificationsIcon from "@mui/icons-material/Notifications";
 import MoreIcon from "@mui/icons-material/MoreVert";
 import logo from "../media/logo.PNG";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
+import ProductCard from "./Card";
 import { useNavigate } from "react-router-dom";
 import { auth } from "../auth/firebase";
+import { Button } from "@mui/material";
+import { Link } from "react-router-dom";
+import DiamondIcon from "@mui/icons-material/Diamond";
+import SpeakerIcon from "@mui/icons-material/Speaker";
+import ManIcon from "@mui/icons-material/Man";
+import WomanIcon from "@mui/icons-material/Woman";
 
 const Search = styled("div")(({ theme }) => ({
   position: "relative",
@@ -62,20 +69,40 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
   },
 }));
 
-export default function Header() {
+export default function Header({ data }) {
   const util = useContext(CartStore);
-  const cartKeys = util.inCartState ? Object.keys(util.inCartState) : [];
+  const navTo = useNavigate();
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
-
+  // const [text, setText] = React.useState('');
+  const handleSearch = (e) => {
+    const inp = e.target.value;
+    util.setText(inp);
+    let obj = data.filter((d) => {
+      return d.title.toLowerCase().includes(inp.toLowerCase());
+    });
+    // console.log(obj);
+    let home = (
+      <div className="productCont">
+        {obj.length > 0 ? (
+          obj.map((d) => (
+            <ProductCard key={d.id} d={d} />
+          ))
+        ) : (
+          <h1>No product found</h1>
+        )}
+      </div>
+    );
+    util.setHomeCont(home);
+  };
   const isMenuOpen = Boolean(anchorEl);
   const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
-  const handleLogout = async () => {
-    if (util.isLoggedIn) {
-      await auth.signOut();
-    }
+
+  const handleLogout = () => {
+    localStorage.removeItem("flipkartToken");
     navTo("/login");
   };
+
   const handleProfileMenuOpen = (event) => {
     setAnchorEl(event.currentTarget);
   };
@@ -111,7 +138,7 @@ export default function Header() {
       onClose={handleMenuClose}
     >
       <MenuItem onClick={handleLogout}>
-        {util.isLoggedIn ? "Logout" : "Login/SignUp"}
+        {localStorage.getItem("flipkartToken") ? "Logout" : "Login/SignUp"}
       </MenuItem>
     </Menu>
   );
@@ -162,23 +189,121 @@ export default function Header() {
         </IconButton>
         <p>Cart</p>
       </MenuItem>
+
+      <MenuItem
+        onClick={() => {
+          navTo("/men");
+        }}
+      >
+        <IconButton
+          size="large"
+          aria-label="account of current user"
+          aria-controls="primary-search-account-menu"
+          aria-haspopup="true"
+          color="inherit"
+        >
+          <ManIcon />
+        </IconButton>
+        <p>Men</p>
+      </MenuItem>
+
+      <MenuItem
+        onClick={() => {
+          navTo("/women");
+        }}
+      >
+        <IconButton
+          size="large"
+          aria-label="account of current user"
+          aria-controls="primary-search-account-menu"
+          aria-haspopup="true"
+          color="inherit"
+        >
+          <WomanIcon />
+        </IconButton>
+        <p>Women</p>
+      </MenuItem>
+
+      <MenuItem
+        onClick={() => {
+          navTo("/electronics");
+        }}
+      >
+        <IconButton
+          size="large"
+          aria-label="account of current user"
+          aria-controls="primary-search-account-menu"
+          aria-haspopup="true"
+          color="inherit"
+        >
+          <SpeakerIcon />
+        </IconButton>
+        <p>Electronics</p>
+      </MenuItem>
+
+      <MenuItem
+        onClick={() => {
+          navTo("/jewelery");
+        }}
+      >
+        <IconButton
+          size="large"
+          aria-label="account of current user"
+          aria-controls="primary-search-account-menu"
+          aria-haspopup="true"
+          color="inherit"
+        >
+          <DiamondIcon />
+        </IconButton>
+        <p>jewelery</p>
+      </MenuItem>
     </Menu>
   );
-  const navTo = useNavigate();
 
   return (
-    <Box sx={{ flexGrow: 1, mb: 10 }}>
+    <Box sx={{ flexGrow: 1, mb: 4 }}>
       <AppBar position="fixed" sx={{ pl: 2, pr: 2 }}>
         <Toolbar>
           <img
+            style={{ width: "100px", cursor: "pointer" }}
+            src={logo}
+            alt="logo"
             onClick={() => {
               navTo("/");
             }}
-            src={logo}
-            alt="logo"
           />
+          <Search>
+            <SearchIconWrapper>
+              <SearchIcon />
+            </SearchIconWrapper>
+            <StyledInputBase
+              placeholder="Search…"
+              inputProps={{ "aria-label": "search" }}
+              onChange={handleSearch}
+            />
+          </Search>
           <Box sx={{ flexGrow: 1 }} />
-          <Box sx={{ display: { xs: "none", md: "flex" } }}>
+          <Box sx={{ display: { xs: "none", md: "flex" }, gap: "30px" }}>
+            <Link to="/men">
+              <Button color="inherit" sx={{ color: "white" }}>
+                Men
+              </Button>
+            </Link>
+            <Link to="/women">
+              <Button sx={{ color: "white" }} color="inherit">
+                Women
+              </Button>
+            </Link>
+            <Link to="/electronics">
+              <Button sx={{ color: "white" }} color="inherit">
+                Electronics
+              </Button>
+            </Link>
+            <Link to="/jewelery">
+              <Button sx={{ color: "white" }} color="inherit">
+                Jewelery
+              </Button>
+            </Link>
             <IconButton
               size="large"
               aria-label="show 17 new notifications"
@@ -187,7 +312,7 @@ export default function Header() {
                 navTo("/cart");
               }}
             >
-              <Badge badgeContent={cartKeys.length} color="error">
+              <Badge badgeContent={util.rows.length} color="error">
                 <ShoppingCartIcon />
               </Badge>
             </IconButton>

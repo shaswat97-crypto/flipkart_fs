@@ -17,7 +17,8 @@ export default function Header() {
     <Box sx={{ flexGrow: 1, mb:10 }}>
       <AppBar position="fixed" sx={{pl:2, pr:2}}>
         <Toolbar>
-            <img onClick={()=>{navTo('/')}} src={logo} alt="logo" />
+            <img style={{width: '100px',
+              cursor: 'pointer'}} onClick={()=>{navTo('/')}} src={logo} alt="logo" />
           <Box sx={{ flexGrow: 1 }} />
         </Toolbar>
       </AppBar>

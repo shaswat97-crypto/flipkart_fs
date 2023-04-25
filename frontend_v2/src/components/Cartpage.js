@@ -17,31 +17,61 @@ import Card from "@mui/material/Card";
 import CardActions from "@mui/material/CardActions";
 import CardContent from "@mui/material/CardContent";
 import Typography from "@mui/material/Typography";
+import axios from "axios";
 
 function Cartpage() {
-  let bull = "a";
   const navTo = useNavigate();
   const util = useContext(CartStore);
-  const rows = util.inCartState ? Object.values(util.inCartState) : [];
-  const add = (e) => {
+  const { fetch, setFetch } = useContext(CartStore);
+  const { rows, setRows, fetchCart } = useContext(CartStore);
+
+  const add = async (e) => {
     // console.log('add')
+    setFetch(!fetch);
     const id = e.target.getAttribute("val");
-    // console.log(id);
-    const obj = util.inCartState;
-    obj[id] = { ...obj[id], qty: obj[id].qty + 1 };
-    // console.log(obj);
-    util.setIncartState({ ...obj });
-    localStorage.setItem("cart", JSON.stringify(obj));
+    try {
+      let cart = await axios.post(
+        "/cart/incQty",
+        {
+          productId: id,
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("flipkartToken")}`,
+          },
+        }
+      );
+      console.log({ cart });
+      fetchCart();
+    } catch (err) {
+      console.log({ err });
+    }
   };
-  // console.log(qty)
-  const subtract = (e) => {
+
+  const subtract = async (e) => {
+    // console.log('add')
+    setFetch(!fetch);
+
     const id = e.target.getAttribute("val");
-    const obj = util.inCartState;
-    if (obj[id].qty == 1) delete obj[id];
-    else obj[id] = { ...obj[id], qty: obj[id].qty - 1 };
-    util.setIncartState({ ...obj });
-    localStorage.setItem("cart", JSON.stringify(obj));
+    try {
+      let cart = await axios.post(
+        "/cart/decQty",
+        {
+          productId: id,
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("flipkartToken")}`,
+          },
+        }
+      );
+      console.log({ cart });
+      fetchCart();
+    } catch (err) {
+      console.log({ err });
+    }
   };
+
   const handleCheckoutClick = () => {
     if (util.isLoggedIn) {
       util.setCheckoutFrom("cart");
@@ -50,35 +80,53 @@ function Cartpage() {
       navTo("/login");
     }
   };
-  const handleViewProduct = (e) => {
+
+  const handleViewProduct = (id) => {
     // console.log('handleViewProduct');
     // console.log(data);
-    const data = util.inCartState;
-    // console.log(data)
-    if (data == null || data == {}) return;
-    const id = e.currentTarget.getAttribute("val");
-    // console.log(data[id], id, e.currentTarget);
-    util.setCurrProduct(data[id]);
-    localStorage.setItem("cp", JSON.stringify(data[id]));
-    navTo(`/product`);
+    // const data = util.inCartState;
+    // // console.log(data)
+    // if (data == null || data == {}) return;
+    // const id = e.currentTarget.getAttribute("val");
+    // // console.log(data[id], id, e.currentTarget);
+    // util.setCurrProduct(data[id]);
+    // localStorage.setItem("cp", JSON.stringify(data[id]));
+    navTo(`/product/${id}`);
   };
-  const handleDelete = (e) => {
-    // console.log('delete');
-    // console.log(e.currentTarget.getAttribute('val'));
+
+  const handleDelete = async (e) => {
+    setFetch(!fetch);
     const id = e.currentTarget.getAttribute("val");
-    const obj = util.inCartState;
-    delete obj[id];
-    util.setIncartState({ ...obj });
-    localStorage.setItem("cart", JSON.stringify(obj));
+    try {
+      let cart = await axios.post(
+        "/cart/delete",
+        {
+          productId: id,
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("flipkartToken")}`,
+          },
+        }
+      );
+      console.log({ cart });
+      fetchCart();
+    } catch (err) {
+      console.log({ err });
+    }
   };
   let total = 0;
   if (rows) {
     total = rows.reduce((acc, d) => {
-      return acc + d.price * d.qty;
+      // console.log(d);
+      return acc + d.product.price * d.quantity;
     }, 0);
   }
+
   let tax = total * 0.18;
+
   let cartTable;
+
   if (rows.length > 0) {
     cartTable = (
       <TableContainer
@@ -108,38 +156,38 @@ function Cartpage() {
           <TableBody>
             {rows.map((row) => (
               <TableRow
-                key={row.id}
+                key={row.product._id}
                 sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
               >
                 <TableCell component="th" scope="row">
                   <div
-                    val={row.id}
-                    onClick={handleViewProduct}
+                    val={row.product._id}
+                    onClick={() => handleViewProduct(row.product._id)}
                     className="cartImgCont"
                   >
                     <div className="cartImg">
-                      <img src={row.image} alt="" />
+                      <img src={row.product.image} alt="" />
                     </div>
-                    <div>{row.title}</div>{" "}
+                    <div>{row.product.title}</div>{" "}
                   </div>
                 </TableCell>
                 <TableCell align="right">{row.price}</TableCell>
                 <TableCell align="right">
-                  <button val={row.id} onClick={subtract}>
+                  <button val={row.product._id} onClick={subtract}>
                     -
                   </button>
-                  &nbsp;{row.qty} &nbsp;
-                  <button val={row.id} onClick={add}>
+                  &nbsp;{row.quantity} &nbsp;
+                  <button val={row.product._id} onClick={add}>
                     +
                   </button>
                 </TableCell>
-                <TableCell align="right">
-                  <div val={row.id} onClick={handleDelete}>
+                <TableCell sx={{ cursor: "pointer" }} align="right">
+                  <div val={row.product._id} onClick={handleDelete}>
                     <DeleteIcon />
                   </div>
                 </TableCell>
                 <TableCell align="right">
-                  {(row.price * row.qty).toFixed(2)}
+                  {(row.product.price * row.quantity).toFixed(2)}
                 </TableCell>
               </TableRow>
             ))}
@@ -149,13 +197,6 @@ function Cartpage() {
         <div className="bill">
           <Card sx={{ minWidth: 200, ml: "80%" }}>
             <CardContent sx={{ pb: 0, pr: 0 }}>
-              {/* <Typography
-              sx={{ fontSize: 22 }}
-              color="text.secondary"
-              gutterBottom
-            >
-              Final bill
-            </Typography> */}
               <Typography variant="body2" sx={{ mb: 1.5 }}>
                 Subtotal : {total.toFixed(2)}
                 <br />
@@ -170,7 +211,9 @@ function Cartpage() {
             </CardContent>
             <CardActions>
               <Button onClick={handleCheckoutClick} size="small">
-                {util.isLoggedIn ? "Checkout" : "Login to checkout"}
+                {localStorage.getItem("flipkartToken")
+                  ? "Checkout"
+                  : "Login to checkout"}
               </Button>
             </CardActions>
           </Card>
