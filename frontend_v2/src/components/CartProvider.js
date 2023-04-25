@@ -30,7 +30,7 @@ function CartProvider() {
 
   async function fetchCart() {
     try {
-      let c = await axios.get("/cart", {
+      let c = await axios.get("/api/cart", {
         headers: {
           Authorization: `Bearer ${localStorage.getItem("flipkartToken")}`,
         },
@@ -43,7 +43,9 @@ function CartProvider() {
   }
 
   useEffect(() => {
-    fetchCart();
+    if(localStorage.getItem("flipkartToken")){
+      fetchCart();
+    }
   }, [fetch]);
 
   const cartUtil = {

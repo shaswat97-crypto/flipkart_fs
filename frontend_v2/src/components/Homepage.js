@@ -11,7 +11,7 @@ import { auth } from "../auth/firebase";
 function Homepage() {
   const navTo = useNavigate();
   const util = useContext(CartStore);
-  useLayoutEffect(() => {
+  useEffect(() => {
     if (!localStorage.getItem("flipkartToken")) navTo("/login");
   }, [localStorage.getItem("flipkartToken")]);
 
@@ -22,23 +22,25 @@ function Homepage() {
   useEffect(() => {
     const token = localStorage.getItem("flipkartToken");
     // console.log(token);
-    async function fetchData() {
-      try {
-        let data = await axios.get(url, {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        });
-        // axios.get()
-        // console.log(data.data);
-        setData(data.data);
-        // console.log(data)
-      } catch (err) {
-        console.log({ err });
+    if(token){
+      async function fetchData() {
+        try {
+          let data = await axios.get(url, {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          });
+          // axios.get()
+          // console.log(data.data);
+          setData(data.data);
+          // console.log(data)
+        } catch (err) {
+          console.log({ err });
+        }
       }
+  
+      fetchData();
     }
-
-    fetchData();
   }, []);
 
   useEffect(() => {
