@@ -47,3 +47,16 @@ export const deleteProduct = async (req, res) => {
     res.send(err);
   }
 };
+
+export const updateProduct = async (req, res) => {
+  try {
+    const id = req.params.id;
+    const obj = req.body;
+    const product = await Product.findOneAndUpdate({ _id: id, obj });
+
+    res.status(200).send(product);
+  } catch (err) {
+    console.log({ err });
+    res.send(err);
+  }
+};

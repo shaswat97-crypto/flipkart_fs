@@ -13,6 +13,7 @@ import Jewelery from "./Jewelery";
 import Electronics from "./Electronics";
 import axios from "axios";
 import Admin from './Admin/Admin'
+import UpdateProduct from './Admin/UpdateProduct'
 
 function CartProvider() {
   let loadCircle = (

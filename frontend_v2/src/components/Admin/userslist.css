@@ -1,0 +1,24 @@
+.ul{
+    width: 30%;
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+    flex-direction: column;
+    padding: 0.5rem;
+    box-shadow: 0 0 4px rgba(0, 0, 0, 0.6);
+    margin: 2rem;
+    justify-content: flex-start;
+    padding: 0 1rem;
+}
+
+.ul h2{
+  
+    /* margin-left: 1.2rem; */
+    margin-top: 3rem;
+    font-size: 2rem;
+    text-align: center;
+}
+
+.adminCont{
+    display: flex;
+}

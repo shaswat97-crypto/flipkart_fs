@@ -1,0 +1,95 @@
+
+/* 
+  .ap form{
+    justify-content: flex-end;
+  }
+  .ap form > div{
+    margin: 30px;
+  } */
+  .ap{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  h1{
+    margin-left: 2rem;
+  }
+
+  .ap> div{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    box-shadow: 0 0 4px rgba(0, 0, 0, 0.6);
+    width: 90vw;
+    padding: 1rem;
+  }
+  .ap .label{
+    display: flex;
+    flex-direction: column;
+    min-width: 500px;
+    align-items: flex-start;
+    gap: .5rem;
+  }
+
+ 
+  
+  .ap h2 {
+    font-size: 2rem;
+    margin-bottom: 2rem;
+    color: #333;
+  }
+  
+  .ap form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+  }
+  
+  .ap label {
+    font-size: 1.2rem;
+    margin-bottom: 0.5rem;
+    color: #333;
+  }
+  
+  .ap input[type='text'],
+  .ap textarea {
+    width: auto;
+    padding: 0.5rem;
+    margin-bottom: 1rem;
+    font-size: 1rem;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    min-width: 500px;
+  }
+  
+  .ap button[type='submit'] {
+    background-color: #0077b6;
+    color: #fff;
+    padding: 0.5rem 1rem;
+    border-radius: 5px;
+    border: none;
+    cursor: pointer;
+    transition: all 0.3s ease-in-out;
+    font-size: 1.2rem;
+  }
+  
+  .ap button[type='submit']:hover {
+    background-color: #023e8a;
+  }
+  
+  .ap input[type='text']:hover,
+  .ap textarea:hover {
+    border-color: #023e8a;
+    transition: all 0.3s ease-in-out;
+  }
+  
+  .ap input:focus,
+  .ap textarea:focus {
+    border-color: #0077b6;
+    transition: all 0.3s ease-in-out;
+  }
+  

@@ -8,7 +8,8 @@ import {
   addNewPorduct,
   getProductsAdmin,
   getProductById,
-  deleteProduct
+  deleteProduct,
+  updateProduct
 } from "../controller/products.controller.js";
 
 const router = express.Router();
@@ -18,4 +19,6 @@ export default router
   .post("/", authenticateAdminToken, addNewPorduct)
   .get("/", authenticateAdminToken, getProductsAdmin)
   .get("/:id", authenticateToken, getProductById)
-  .delete('/:id', authenticateAdminToken, deleteProduct);
+  .delete('/:id', authenticateAdminToken, deleteProduct)
+  .patch("/:id", authenticateAdminToken, updateProduct)
+  

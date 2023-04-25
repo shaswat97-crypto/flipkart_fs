@@ -1,0 +1,55 @@
+.p {
+  background-color: #fff;
+  border-radius: 5px;
+  box-shadow: 0 0px 2px rgba(0, 0, 0, 0.5);
+  padding: 1rem;
+  margin-bottom: 1rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  max-width: 300px;
+}
+
+.p h3 {
+  font-size: 1rem;
+  margin-bottom: 0.5rem;
+  color: #333;
+  height: 40px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.p p {
+  margin-bottom: 1rem;
+  color: #666;
+  font-size: 0.6rem;
+  height: 25px;
+  overflow: scroll;
+  text-overflow: ellipsis;
+}
+
+.p ::-webkit-scrollbar {
+    display: none;
+  }  
+
+.p button {
+  background-color: #0077b6;
+  color: #fff;
+  padding: 0.5rem 1rem;
+  border-radius: 5px;
+  border: none;
+  cursor: pointer;
+  transition: all 0.3s ease-in-out;
+  font-size: 0.8rem;
+  margin: 3px;
+  /* margin-right: 0.5rem; */
+}
+
+.p button:disabled {
+  background-color: #ddd;
+  cursor: not-allowed;
+}
+
+.p button:hover {
+  background-color: #023e8a;
+}

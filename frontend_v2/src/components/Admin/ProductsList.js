@@ -1,36 +1,64 @@
 import React, { useEffect, useState } from "react";
 import Product from "./Product";
 import axios from "axios";
-const ProductsList = () => {
-  const [products, setProducts] = useState(null);
+import "./productlist.css";
+import { Alert } from "@mui/material";
 
+const ProductsList = ({ loading, setLoading }) => {
+  const [products, setProducts] = useState(null);
+  const [del, setDel] = useState(false);
   useEffect(() => {
     // Fetch products data from server
     // Set products state
-    const fetchData = async () => {
-      const res = await axios.get("/api/products", {
-        headers: {
-          Authorization: `Bearer ${localStorage.getItem("flipkartAdminToken")}`,
-        },
-      });
-      setProducts(res.data);
-    };
-    fetchData();
-  }, []);
+    if (!loading || !del) {
+      const fetchData = async () => {
+        const res = await axios.get("/api/products", {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem(
+              "flipkartAdminToken"
+            )}`,
+          },
+        });
+        setProducts(res.data);
+      };
+      fetchData();
+    }
+  }, [loading, del]);
 
   let loadCircle = (
     <div className="productCont">
       <span className="loader"></span>
     </div>
   );
+
+  const cartAlert = (
+    <div className="alerted">
+      <Alert sx={{ backgroundColor: "white" }} severity="success">
+        Product deleted successfully!
+      </Alert>
+    </div>
+  );
+
   return (
     <>
       {products ? (
-        <div>
+        <div className="pl">
           <h2>All Products</h2>
-          {products.map((product) => (
-            <Product key={product.id} product={product} />
-          ))}
+          {del && cartAlert}
+          {products.length > 0 ? (
+            products.map((product) => (
+              <Product
+                key={product._id}
+                product={product}
+                del={del}
+                setDel={setDel}
+                loading={loading}
+                setLoading={setLoading}
+              />
+            ))
+          ) : (
+            <h2>No products found!</h2>
+          )}
         </div>
       ) : (
         loadCircle

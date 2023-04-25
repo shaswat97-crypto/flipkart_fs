@@ -1,22 +1,26 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-
-const UsersList = () => {
+import "./userslist.css";
+const UsersList = ({ loading, setLoading }) => {
   const [users, setUsers] = useState([]);
 
   useEffect(() => {
     // Fetch users data from server
     // Set users state
-    const fetchUsers = async () => {
-      const res = await axios.get("/api/admin/users", {
-        headers: {
-          Authorization: `Bearer ${localStorage.getItem("flipkartAdminToken")}`,
-        },
-      });
-      setUsers(res.data);
-    };
-    fetchUsers()
-  }, []);
+    if (!loading) {
+      const fetchUsers = async () => {
+        const res = await axios.get("/api/admin/users", {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem(
+              "flipkartAdminToken"
+            )}`,
+          },
+        });
+        setUsers(res.data);
+      };
+      fetchUsers();
+    }
+  }, [loading]);
 
   let loadCircle = (
     <div className="productCont">
@@ -26,13 +30,15 @@ const UsersList = () => {
   return (
     <>
       {users ? (
-        <div>
+        <div className="ul">
           <h2>All Users</h2>
-          <ul>
-            {users.map((user) => (
-              <li key={user.id}>{user.name}</li>
-            ))}
-          </ul>
+          <div>
+            {users.length > 0 ? (
+              users.map((user, indx) => <p key={user._id}>{`${indx+1}. userId : ${user.email} (Role : ${user.role})`}</p>)
+            ) : (
+              <h4>No users found</h4>
+            )}
+          </div>
         </div>
       ) : (
         loadCircle
