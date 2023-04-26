@@ -50,9 +50,10 @@ export const deleteProduct = async (req, res) => {
 
 export const updateProduct = async (req, res) => {
   try {
-    const id = req.params.id;
-    const obj = req.body;
-    const product = await Product.findOneAndUpdate({ _id: id, obj });
+    // const id = req.params.id;
+    const {obj, id} = req.body;
+    // console.log({obj, id})
+    const product = await Product.findByIdAndUpdate(id, obj, { new: true });
 
     res.status(200).send(product);
   } catch (err) {

@@ -76,16 +76,18 @@ const AddProduct = ({ loading, setLoading }) => {
               name="title"
               value={formValues.title}
               onChange={handleInputChange}
+              required='true'
             />
           </div>
           <div className="label">
             <label htmlFor="price">Price:</label>
             <input
               name="price"
-              type="text"
+              type="number"
               id="price"
               value={formValues.price}
               onChange={handleInputChange}
+              required='true'
             />
           </div>
           <div className="label">
@@ -95,6 +97,7 @@ const AddProduct = ({ loading, setLoading }) => {
               id="description"
               value={formValues.description}
               onChange={handleInputChange}
+              required='true'
             />
           </div>
           <div className="label">
@@ -105,6 +108,7 @@ const AddProduct = ({ loading, setLoading }) => {
               id="category"
               value={formValues.category}
               onChange={handleInputChange}
+              required='true'
             />
           </div>
           <div className="label">
@@ -115,6 +119,7 @@ const AddProduct = ({ loading, setLoading }) => {
               id="image"
               value={formValues.image}
               onChange={handleInputChange}
+              required='true'
             />
           </div>
           <button type="submit">Add Product</button>

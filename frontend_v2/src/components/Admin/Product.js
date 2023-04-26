@@ -62,7 +62,7 @@ const Product = ({ product, loading, setLoading, del, setDel }) => {
         aria-describedby="modal-modal-description"
       >
         <Box sx={style}>
-          <UpdateProduct product={product} loading={loading} setLoading={setLoading}/>
+          <UpdateProduct product={product} loading={loading} setLoading={setLoading} handleClose={handleClose}/>
         </Box>
       </Modal>
     </div>

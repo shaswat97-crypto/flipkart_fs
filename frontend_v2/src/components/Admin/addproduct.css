@@ -55,7 +55,7 @@
     color: #333;
   }
   
-  .ap input[type='text'],
+  .ap input[type='text'], .ap input[type='number'],
   .ap textarea {
     width: auto;
     padding: 0.5rem;
@@ -81,7 +81,7 @@
     background-color: #023e8a;
   }
   
-  .ap input[type='text']:hover,
+  .ap input[type='text']:hover, .ap input[type='number']:hover,
   .ap textarea:hover {
     border-color: #023e8a;
     transition: all 0.3s ease-in-out;

@@ -1,18 +1,18 @@
 {
   "files": {
-    "main.css": "/static/css/main.fc902909.css",
-    "main.js": "/static/js/main.1d583386.js",
+    "main.css": "/static/css/main.c58d32d1.css",
+    "main.js": "/static/js/main.6121854c.js",
     "static/js/787.f5e1d206.chunk.js": "/static/js/787.f5e1d206.chunk.js",
     "static/media/flipkart-big-billion-day-bank &-wallet-offers.jpg": "/static/media/flipkart-big-billion-day-bank &-wallet-offers.84f678aca0ac9b32f004.jpg",
     "static/media/flipkart-e1619775124176.jpg": "/static/media/flipkart-e1619775124176.fc698349d172e25e7fe0.jpg",
     "static/media/logo.PNG": "/static/media/logo.f64bb356d52f7e8a0af4.PNG",
     "index.html": "/index.html",
-    "main.fc902909.css.map": "/static/css/main.fc902909.css.map",
-    "main.1d583386.js.map": "/static/js/main.1d583386.js.map",
+    "main.c58d32d1.css.map": "/static/css/main.c58d32d1.css.map",
+    "main.6121854c.js.map": "/static/js/main.6121854c.js.map",
     "787.f5e1d206.chunk.js.map": "/static/js/787.f5e1d206.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.fc902909.css",
-    "static/js/main.1d583386.js"
+    "static/css/main.c58d32d1.css",
+    "static/js/main.6121854c.js"
   ]
 }

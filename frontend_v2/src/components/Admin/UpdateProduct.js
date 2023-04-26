@@ -3,7 +3,7 @@ import axios from "axios";
 import "./addproduct.css";
 import { Alert } from "@mui/material";
 
-const AddProduct = ({ product, loading, setLoading }) => {
+const AddProduct = ({ product, loading, setLoading, handleClose }) => {
   const [formValues, setFormValues] = useState({
     title: "",
     price: "",
@@ -27,10 +27,13 @@ const AddProduct = ({ product, loading, setLoading }) => {
     if (formValues.description) obj.description = formValues.description;
     if (formValues.image) obj.image = formValues.image;
 
+    // console.log(obj);
+    const id=product._id
+
     // TODO: Submit form data to the backend
     const response = await axios.patch(
       `/api/products/${product._id}`,
-      obj,
+      {obj, id},
       {
         headers: {
           Authorization: `Bearer ${localStorage.getItem("flipkartAdminToken")}`,
@@ -50,6 +53,7 @@ const AddProduct = ({ product, loading, setLoading }) => {
     });
     setTimeout(() => {
       setLoading(false);
+      handleClose();
     }, 1000);
   };
 

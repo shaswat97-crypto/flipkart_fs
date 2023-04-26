@@ -34,6 +34,20 @@ export default function Header() {
           >
             Admin Console
           </Box>
+          <Box
+            onClick={() => {localStorage.removeItem('flipkartAdminToken'); navTo("/login")}}
+            sx={{
+              "&:hover": {
+                transform: "scale(1.05)",
+                color: "black",
+              },
+              cursor: "pointer",
+              // flexGrow: 1,
+              textAlign: "right",
+            }}
+          >
+            Logout
+          </Box>
         </Toolbar>
       </AppBar>
     </Box>
