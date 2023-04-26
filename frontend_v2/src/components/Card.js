@@ -31,7 +31,8 @@ export default function ProductCard({ d }) {
           },
         }
       );
-      console.log({ cart });
+      const data = await cart.data;
+      console.log({data});
     } catch (err) {
       console.log({ err });
     }

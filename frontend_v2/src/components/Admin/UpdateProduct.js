@@ -41,7 +41,7 @@ const AddProduct = ({ product, loading, setLoading, handleClose }) => {
       }
     );
     const data = await response.data;
-    console.log(data);
+    console.log({data});
 
     // Reset form after successful submission
     setFormValues({

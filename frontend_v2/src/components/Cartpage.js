@@ -41,7 +41,8 @@ function Cartpage() {
           },
         }
       );
-      console.log({ cart });
+      const d = await cart.data;
+      console.log({d});
       fetchCart();
     } catch (err) {
       console.log({ err });
@@ -65,7 +66,8 @@ function Cartpage() {
           },
         }
       );
-      console.log({ cart });
+      const d = await cart.data;
+      console.log({d});
       fetchCart();
     } catch (err) {
       console.log({ err });
@@ -104,7 +106,8 @@ function Cartpage() {
           },
         }
       );
-      console.log({ cart });
+      const d = await cart.data;
+      console.log({d});
       fetchCart();
     } catch (err) {
       console.log({ err });

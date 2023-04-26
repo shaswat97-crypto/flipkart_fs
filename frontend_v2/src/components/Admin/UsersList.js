@@ -16,7 +16,9 @@ const UsersList = ({ loading, setLoading }) => {
             )}`,
           },
         });
-        setUsers(res.data);
+        const d = await res.data
+        console.log({d})
+        setUsers(d);
       };
       fetchUsers();
     }

@@ -19,7 +19,9 @@ const ProductsList = ({ loading, setLoading }) => {
             )}`,
           },
         });
-        setProducts(res.data);
+        const d = await res.data
+        console.log({d})
+        setProducts(d);
       };
       fetchData();
     }

@@ -16,11 +16,13 @@ const Product = ({ product, loading, setLoading, del, setDel }) => {
   const handleDelete = async () => {
     // Handle delete functionality
     setDel(true);
-    await axios.delete(`/api/products/${product._id}`, {
+    const res = await axios.delete(`/api/products/${product._id}`, {
       headers: {
         Authorization: `Bearer ${localStorage.getItem("flipkartAdminToken")}`,
       },
     });
+    const d = await res.data;
+      console.log({d});
     setTimeout(() => {
       setDel(false);
     }, 1000);
