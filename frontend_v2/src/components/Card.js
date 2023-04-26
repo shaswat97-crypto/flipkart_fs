@@ -21,7 +21,7 @@ export default function ProductCard({ d }) {
 
     try {
       let cart = await axios.post(
-        "http://localhost:8080/api/cart",
+        "/api/cart",
         {
           productId: data._id,
         },

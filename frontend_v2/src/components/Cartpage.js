@@ -29,7 +29,7 @@ function Cartpage() {
     const id = e.target.getAttribute("val");
     try {
       let cart = await axios.post(
-        "http://localhost:8080/api/cart/incQty",
+        "/api/cart/incQty",
         {
           productId: id,
         },
@@ -54,7 +54,7 @@ function Cartpage() {
     const id = e.target.getAttribute("val");
     try {
       let cart = await axios.post(
-        "http://localhost:8080/api/cart/decQty",
+        "/api/cart/decQty",
         {
           productId: id,
         },
@@ -94,7 +94,7 @@ function Cartpage() {
     const id = e.currentTarget.getAttribute("val");
     try {
       let cart = await axios.post(
-        "http://localhost:8080/api/cart/delete",
+        "/api/cart/delete",
         {
           productId: id,
         },

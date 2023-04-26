@@ -32,7 +32,7 @@ function CartProvider() {
 
   const fetchCart = async () => {
     try {
-      let c = await axios.get("http://localhost:8080/api/cart", {
+      let c = await axios.get("/api/cart", {
         headers: {
           Authorization: `Bearer ${localStorage.getItem("flipkartToken")}`,
         },

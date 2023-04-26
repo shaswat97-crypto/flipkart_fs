@@ -34,7 +34,7 @@ const AddProduct = ({ product, loading, setLoading, handleClose }) => {
 
     // TODO: Submit form data to the backend
     const response = await axios.patch(
-      `http://localhost:8080/api/products/${product._id}`,
+      `/api/products/${product._id}`,
       {obj, id},
       {
         headers: {

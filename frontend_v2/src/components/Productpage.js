@@ -35,7 +35,7 @@ function Productpage() {
   useEffect(() => {
     async function getProduct() {
       try {
-        let p = await axios.get(`http://localhost:8080/api/products/${id}`, {
+        let p = await axios.get(`/api/products/${id}`, {
           headers: {
             Authorization: `Bearer ${localStorage.getItem("flipkartToken")}`,
           },
@@ -43,7 +43,7 @@ function Productpage() {
         // console.log(p.data);
         setProduct(p.data);
 
-        let cart = await axios.get("http://localhost:8080/api/cart", {
+        let cart = await axios.get("/api/cart", {
           headers: {
             Authorization: `Bearer ${localStorage.getItem("flipkartToken")}`,
           },
@@ -83,7 +83,7 @@ function Productpage() {
     util.setFetch(!util.fetch);
     try{
       let cart = await axios.post(
-        "http://localhost:8080/api/cart",
+        "/api/cart",
         {
           productId: product._id,
         },
