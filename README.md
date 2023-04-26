@@ -6,10 +6,10 @@
 </p>
 
 ## User Panel
-![screenshot](https://github.com/shaswat97-crypto/media/blob/master/flipkart.gif)
+![screenshot](https://github.com/shaswat97-crypto/media/blob/master/flipkartuser.gif)
 
 ## Admin Panel
-![screenshot](https://github.com/shaswat97-crypto/media/blob/master/flipkart.gif)
+![screenshot](https://github.com/shaswat97-crypto/media/blob/master/flipkartadmin.gif)
 
 ## Key Features
 
@@ -26,11 +26,24 @@ To clone and run this application, you'll need [Git](https://git-scm.com) and [N
 # Clone this repository
 $ git clone https://github.com/shaswat97-crypto/flipkart-clone
 
+## For backend
 # Go into the repository
 $ cd flipkart-clone
+$ cd backend
 
 # Install dependencies
-$ npm init -y
+$ npm install 
+
+# Run the app
+$ node index.js
+
+## For frontend
+
+# Go into the repository
+$ cd flipkart-clone
+$ cd frontend_v2
+
+# Install dependencies
 $ npm install 
 
 # Run the app
@@ -46,5 +59,8 @@ This software uses the following open source packages:
 
 - [Node.js](https://nodejs.org/)
 - [React.js](https://react.dev/)
+- [Express.js](https://expressjs.com/)
+- [MongoDB](https://cloud.mongodb.com/)
+- [mongoose](https://mongoosejs.com/)
 
 
