@@ -5,12 +5,18 @@
  • <a href="#how-to-use">How To Use</a> 
 </p>
 
+## User Panel
+![screenshot](https://github.com/shaswat97-crypto/media/blob/master/flipkart.gif)
+
+## Admin Panel
 ![screenshot](https://github.com/shaswat97-crypto/media/blob/master/flipkart.gif)
 
 ## Key Features
 
-* Persistant storage of cart items
-* User can login/signup or change password
+* Users can view, save to cart and purchase products
+* Admin panel that allows authorized users to manage products, including adding, editing, and
+deleting products
+* Secure authentication system using JSON Web Tokens (JWT)
 
 ## How To Use
 
