@@ -22,6 +22,7 @@ import axios from "axios";
 function Cartpage() {
   const navTo = useNavigate();
   const { rows, setRows, fetchCart, fetch, setFetch } = useContext(CartStore);
+  console.log(rows);
 
   const add = async (e) => {
     // console.log('add')

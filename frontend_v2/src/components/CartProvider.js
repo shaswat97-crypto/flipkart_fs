@@ -31,6 +31,7 @@ function CartProvider() {
   const [success, setSuccess] = useState(false);
 
   const fetchCart = async () => {
+    console.log('fetching cart')
     try {
       let c = await axios.get("/api/cart", {
         headers: {
@@ -38,7 +39,8 @@ function CartProvider() {
         },
       });
       const d = await c.data;
-      setRows(d);
+      console.log({d})
+      setRows([...d]);
     } catch (err) {
       console.log({ err });
     }

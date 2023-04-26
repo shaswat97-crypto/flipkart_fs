@@ -13,9 +13,7 @@ export default function ProductCard({ d }) {
   const navTo = useNavigate();
 
   const handleAddCartClick = async (data) => {
-    util.setFetch(!util.fetch);
-    // console.log(util.fetch, util.setFetch);
-    util.setSuccess(true);
+   
     // console.log("handleAddCartClick");
     // console.log("id", data._id);
 
@@ -33,6 +31,9 @@ export default function ProductCard({ d }) {
       );
       const d = await cart.data;
       console.log({d});
+      util.setFetch(!util.fetch);
+      // console.log(util.fetch, util.setFetch);
+      util.setSuccess(true);
     } catch (err) {
       console.log({ err });
     }

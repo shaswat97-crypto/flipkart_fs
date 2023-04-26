@@ -29,12 +29,11 @@ export const addToCart = async (req, res) => {
     }
     // console.log(user)
     await user.save();
+    res.status(200).send(user.cart);
   } catch (err) {
     console.log({ err });
     res.send(err);
   }
-
-  res.status(200).send("Product added to cart successfully");
 };
 
 export const decQty = async (req, res) => {
@@ -141,7 +140,7 @@ export const deleteCart = async (req, res) => {
     if (existingCartItem) {
       // If product already exists in the cart, update the quantity
       user.cart.splice(indx, 1);
-    } 
+    }
     // console.log(user)
     await user.save();
   } catch (err) {
