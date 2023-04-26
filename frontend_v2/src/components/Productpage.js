@@ -41,24 +41,26 @@ function Productpage() {
           },
         });
         // console.log(p.data);
-        setProduct(p.data);
+        const d = await p.data;
+        console.log({d});
+        setProduct(d);
 
-        let cart = await axios.get("/api/cart", {
-          headers: {
-            Authorization: `Bearer ${localStorage.getItem("flipkartToken")}`,
-          },
-        });
+        // let cart = await axios.get("/api/cart", {
+        //   headers: {
+        //     Authorization: `Bearer ${localStorage.getItem("flipkartToken")}`,
+        //   },
+        // });
         // console.log(cart.data);
-        cart = cart.data
-        if (cart && cart.length > 0) {
-          for (let i = 0; i < cart.length; i++) {
-            if (cart[i].product._id == id) {
-              // console.log('incart')
-              util.setIncart(true);
-              break;
-            }
-          }
-        }
+        // cart = await cart.data
+        // console.log(cart);
+        // if (cart && cart.length > 0) {
+        //   for (let i = 0; i < cart.length; i++) {
+        //     if (cart[i].product._id == id) {
+        //       // console.log('incart')
+        //       break;
+        //     }
+        //   }
+        // }
       } catch (err) {
         console.log({ err });
       }
@@ -77,10 +79,8 @@ function Productpage() {
   };
 
   const handleAddCartClick = async () => {
-    setSuccess(true);
     if (!product || product == {}) return;
     console.log("handleAddCartClick");
-    util.setFetch(!util.fetch);
     try{
       let cart = await axios.post(
         "/api/cart",
@@ -93,7 +93,10 @@ function Productpage() {
           },
         }
       );
-      console.log({ cart });
+      const d = await cart.data;
+      console.log({ d });
+      setSuccess(true);
+      util.setFetch(!util.fetch);
     }
     catch(err){
       console.log({err})
@@ -114,6 +117,12 @@ function Productpage() {
       <Alert sx={{ backgroundColor: "white" }} severity="success">
         Item added to cart!
       </Alert>
+    </div>
+  );
+
+  let loadCircle = (
+    <div className="productCont">
+      <span className="loader"></span>
     </div>
   );
 
@@ -207,7 +216,7 @@ function Productpage() {
           </Box>
         </>
       ) : (
-        <h1>Something went wrong...</h1>
+        loadCircle
       )}
     </div>
   );
