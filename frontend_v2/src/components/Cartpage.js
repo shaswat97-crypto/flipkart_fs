@@ -26,7 +26,7 @@ function Cartpage() {
 
   const add = async (e) => {
     // console.log('add')
-    setFetch(!fetch);
+    
     const id = e.target.getAttribute("val");
     try {
       let cart = await axios.post(
@@ -42,7 +42,8 @@ function Cartpage() {
       );
       const d = await cart.data;
       console.log({ d });
-      fetchCart();
+      // setFetch(!fetch);
+      await fetchCart();
     } catch (err) {
       console.log({ err });
     }
@@ -50,7 +51,7 @@ function Cartpage() {
 
   const subtract = async (e) => {
     // console.log('add')
-    setFetch(!fetch);
+    // setFetch(!fetch);
 
     const id = e.target.getAttribute("val");
     try {
@@ -67,7 +68,7 @@ function Cartpage() {
       );
       const d = await cart.data;
       console.log({ d });
-      fetchCart();
+      await fetchCart();
     } catch (err) {
       console.log({ err });
     }
@@ -91,7 +92,7 @@ function Cartpage() {
   };
 
   const handleDelete = async (e) => {
-    setFetch(!fetch);
+    // setFetch(!fetch);
     const id = e.currentTarget.getAttribute("val");
     try {
       let cart = await axios.post(

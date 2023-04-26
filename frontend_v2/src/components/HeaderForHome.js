@@ -71,6 +71,11 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 
 export default function Header({ data }) {
   const util = useContext(CartStore);
+
+  React.useEffect(()=>{
+    util.fetchCart();
+  }, []);
+
   console.log(util.rows);
   const navTo = useNavigate();
   const [anchorEl, setAnchorEl] = React.useState(null);
