@@ -9,7 +9,7 @@ const UsersList = ({ loading, setLoading }) => {
     // Set users state
     if (!loading) {
       const fetchUsers = async () => {
-        const res = await axios.get("/api/admin/users", {
+        const res = await axios.get("http://localhost:8080/api/admin/users", {
           headers: {
             Authorization: `Bearer ${localStorage.getItem(
               "flipkartAdminToken"

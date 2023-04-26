@@ -26,13 +26,15 @@ const AddProduct = ({ product, loading, setLoading, handleClose }) => {
     if (formValues.price) obj.price = formValues.price;
     if (formValues.description) obj.description = formValues.description;
     if (formValues.image) obj.image = formValues.image;
+    if (formValues.category) obj.category = formValues.category;
+
 
     // console.log(obj);
     const id=product._id
 
     // TODO: Submit form data to the backend
     const response = await axios.patch(
-      `/api/products/${product._id}`,
+      `http://localhost:8080/api/products/${product._id}`,
       {obj, id},
       {
         headers: {
@@ -85,7 +87,7 @@ const AddProduct = ({ product, loading, setLoading, handleClose }) => {
             <label htmlFor="price">Price:</label>
             <input
               name="price"
-              type="text"
+              type="number"
               id="price"
               value={formValues.price}
               onChange={handleInputChange}

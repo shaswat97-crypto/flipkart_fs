@@ -30,15 +30,15 @@ function CartProvider() {
   const [fetch, setFetch] = useState(false);
   const [success, setSuccess] = useState(false);
 
-  async function fetchCart() {
+  const fetchCart = async () => {
     try {
-      let c = await axios.get("/api/cart", {
+      let c = await axios.get("http://localhost:8080/api/cart", {
         headers: {
           Authorization: `Bearer ${localStorage.getItem("flipkartToken")}`,
         },
       });
-      console.log(c.data);
-      setRows(c.data);
+      const d = await c.data;
+      setRows(d);
     } catch (err) {
       console.log({ err });
     }
@@ -67,6 +67,7 @@ function CartProvider() {
     setFetch,
     success,
     setSuccess,
+    fetchCart
   };
   return (
     <CartStore.Provider value={cartUtil}>

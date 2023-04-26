@@ -21,9 +21,7 @@ import axios from "axios";
 
 function Cartpage() {
   const navTo = useNavigate();
-  const util = useContext(CartStore);
-  const { fetch, setFetch } = useContext(CartStore);
-  const { rows, setRows, fetchCart } = useContext(CartStore);
+  const { rows, setRows, fetchCart, fetch, setFetch } = useContext(CartStore);
 
   const add = async (e) => {
     // console.log('add')
@@ -31,7 +29,7 @@ function Cartpage() {
     const id = e.target.getAttribute("val");
     try {
       let cart = await axios.post(
-        "/api/cart/incQty",
+        "http://localhost:8080/api/cart/incQty",
         {
           productId: id,
         },
@@ -42,7 +40,7 @@ function Cartpage() {
         }
       );
       const d = await cart.data;
-      console.log({d});
+      console.log({ d });
       fetchCart();
     } catch (err) {
       console.log({ err });
@@ -56,7 +54,7 @@ function Cartpage() {
     const id = e.target.getAttribute("val");
     try {
       let cart = await axios.post(
-        "/api/cart/decQty",
+        "http://localhost:8080/api/cart/decQty",
         {
           productId: id,
         },
@@ -67,7 +65,7 @@ function Cartpage() {
         }
       );
       const d = await cart.data;
-      console.log({d});
+      console.log({ d });
       fetchCart();
     } catch (err) {
       console.log({ err });
@@ -75,7 +73,7 @@ function Cartpage() {
   };
 
   const handleCheckoutClick = () => {
-      navTo("/checkout");
+    navTo("/checkout");
   };
 
   const handleViewProduct = (id) => {
@@ -96,7 +94,7 @@ function Cartpage() {
     const id = e.currentTarget.getAttribute("val");
     try {
       let cart = await axios.post(
-        "/api/cart/delete",
+        "http://localhost:8080/api/cart/delete",
         {
           productId: id,
         },
@@ -107,8 +105,9 @@ function Cartpage() {
         }
       );
       const d = await cart.data;
-      console.log({d});
-      fetchCart();
+      console.log({ d });
+      // console.log(fetchCart)
+      await fetchCart();
     } catch (err) {
       console.log({ err });
     }
@@ -180,8 +179,18 @@ function Cartpage() {
                   </button>
                 </TableCell>
                 <TableCell sx={{ cursor: "pointer" }} align="right">
-                  <div val={row.product._id} onClick={handleDelete}>
-                    <DeleteIcon />
+                  <div
+                    val={row.product._id}
+                    onClick={handleDelete}
+                    
+                  >
+                    <DeleteIcon sx={{
+                      transition: "transform 0.2s",
+                      "&:hover": {
+                        transform: "scale(1.1)",
+                        zIndex: 1,
+                      },
+                    }} />
                   </div>
                 </TableCell>
                 <TableCell align="right">

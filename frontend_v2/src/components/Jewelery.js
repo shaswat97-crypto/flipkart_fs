@@ -12,7 +12,7 @@ function Homepage() {
   const util = useContext(CartStore);
   if(!localStorage.getItem("flipkartToken")) navTo('/login');
 
-  const url = "/api/products";
+  const url = "http://localhost:8080/api/products";
   
   const [data, setData] = useState(null);
 

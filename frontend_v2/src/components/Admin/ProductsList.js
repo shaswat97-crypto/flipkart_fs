@@ -12,14 +12,14 @@ const ProductsList = ({ loading, setLoading }) => {
     // Set products state
     if (!loading || !del) {
       const fetchData = async () => {
-        const res = await axios.get("/api/products", {
+        const res = await axios.get("http://localhost:8080/api/products", {
           headers: {
             Authorization: `Bearer ${localStorage.getItem(
               "flipkartAdminToken"
             )}`,
           },
         });
-        const d = await res.data
+        const d = await res.data.reverse();
         console.log({d})
         setProducts(d);
       };

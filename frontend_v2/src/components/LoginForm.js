@@ -34,7 +34,7 @@ function LoginForm() {
           email:data.get("email"),
           password:data.get("password"),
         }
-        const token = await axios.post('/api/admin/login', signupObj);
+        const token = await axios.post('http://localhost:8080/api/admin/login', signupObj);
         // console.log(token.data);
         localStorage.setItem("flipkartAdminToken",token.data.accessToken)
         navTo("/admin");
@@ -46,7 +46,7 @@ function LoginForm() {
             email:data.get("email"),
             password:data.get("password"),
           }
-          const token = await axios.post('/api/user/signup', signupObj);
+          const token = await axios.post('http://localhost:8080/api/user/signup', signupObj);
           // console.log(token.data);
           localStorage.setItem("flipkartToken",token.data.accessToken)
   
@@ -61,7 +61,7 @@ function LoginForm() {
           email:data.get("email"),
           password:data.get("password"),
         }
-        const token = await axios.post('/api/user/login', signupObj);
+        const token = await axios.post('http://localhost:8080/api/user/login', signupObj);
         // console.log(token.data);
         localStorage.setItem("flipkartToken",token.data.accessToken)
         navTo("/");

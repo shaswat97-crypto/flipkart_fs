@@ -24,7 +24,7 @@ const AddProduct = ({ loading, setLoading }) => {
 
     // TODO: Submit form data to the backend
     const response = await axios.post(
-      "/api/products",
+      "http://localhost:8080/api/products",
       {
         ...formValues,
         rating: {
